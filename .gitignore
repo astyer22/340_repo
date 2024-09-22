@@ -14,3 +14,9 @@ node_modules
 
 # .DS_Store is only for Mac users
 **/.DS_Store
+
+# pnpm-lock.yaml is a file created by pnpm
+pnpm-lock.yaml
+
+# README.md is a file that is not necessary but is included for clarification
+README.md
