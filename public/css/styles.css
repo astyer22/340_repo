@@ -173,8 +173,32 @@ height: 130px;
   justify-content: center; /* Center align content vertically */
 }
 
+/* Login Form */
+
+.login-form {
+  border: 3px solid black;
+  border-radius: 10px;
+  background-color: rgba(40, 128, 229, 0.861);
+  padding: 10px;
+  width: 50%;
+  margin-left: 10px;
+}
+
+.form-group {
+  font-weight: bold;
+  font-size: 1em;
+  margin-bottom: 10px;
+}
+
+#sign-up {
+  font-size: .95em;
+  margin-left: 10px;
+  color: var(--tertiary-color);
+}
+
 footer {
-  color: red
+  color: red;
+  margin-left: 10px
 }
 
 

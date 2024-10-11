@@ -4,6 +4,15 @@
  *******************************************/
 
 /* ***********************
+ * Sessions
+ *************************/
+const session = require("express-session")
+const pool = require('./database/')
+
+
+
+
+/* ***********************
  * Require Statements
  *************************/
 const express = require("express");
@@ -14,6 +23,31 @@ const static = require("./routes/static");
 const baseController = require("./controllers/baseController");
 const inventoryRoute = require("./routes/inventoryRoute");
 const utilities = require("./utilities/index"); // Add this line with the correct path
+const accountRoute = require("./routes/accountRoute"); // Add this line with the correct path
+
+
+/* ***********************
+ * Middleware
+ * ************************/
+app.use(session({
+  store: new (require('connect-pg-simple')(session))({
+    createTableIfMissing: true,
+    pool,
+  }),
+  secret: process.env.SESSION_SECRET,
+  resave: true,
+  saveUninitialized: true,
+  name: 'sessionId',
+}))
+
+// Express Messages Middleware
+app.use(require('connect-flash')())
+app.use(function(req, res, next){
+  res.locals.messages = require('express-messages')(req, res)
+  next()
+})
+
+
 
 /* ***********************
  * View Engine and Templates
@@ -30,6 +64,7 @@ app.use(static);
 // Index route
 app.get("/", baseController.buildHome);
 app.use("/inv", inventoryRoute);
+app.use("/account", accountRoute);
 
 // File Not Found Route - must be last route in list
 app.use(async (req, res, next) => {
