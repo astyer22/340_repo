@@ -1,17 +1,17 @@
 <!-- Content Heading -->
 <% if (title) { %>
     <h1><%= title %></h1>
-    <% } else {
-        res.rediredct('/')
-    } %>
+<% } else { %>
+    <h1>Something went wrong!</h1>
+<% } %>
 
 <!-- Display Error Message -->
 <div class="error-message">
     <% if (message) { %>
-        <%- message %> <!-- Using unescaped code block to display the message -->
+        <p><%- message %></p> <!-- Using unescaped code block to display the message -->
     <% } else { %>
         <h2>404 - Page Not Found</h2>
         <p>Oops! Looks like Bigfoot took this page on a little adventure. 🦶✨</p>
-        <p>But don’t worry, we’re on the hunt to bring it back! </p>
+        <p>But don’t worry, we’re on the hunt to bring it back!</p>
     <% } %>
 </div>

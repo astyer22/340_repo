@@ -1,3 +1,5 @@
+// invController.js
+
 const invModel = require("../models/inventory-model")
 const utilities = require("../utilities/")
 
@@ -19,4 +21,31 @@ invCont.buildByClassificationId = async function (req, res, next) {
   })
 }
 
-module.exports = invCont
+/* ***************************
+ *  Build vehicle detail view by ID
+ * ************************** */
+invCont.buildByInventoryId = async function (req, res, next) {
+  const invId = req.params.invId;
+  const vehicle = await invModel.getInventoryById(invId);
+  
+  if (vehicle) {
+    const nav = await utilities.getNav();
+    const vehicleHTML = utilities.buildVehicleDetailHTML(vehicle);
+    res.render("inventory/detail", {
+      title: `${vehicle.inv_make} ${vehicle.inv_model}`,
+      nav,
+      vehicleHTML,
+    });
+  } else {
+    next({ status: 404, message: "Vehicle not found." });
+  }
+};
+
+// Function to trigger a server error
+invCont.triggerError = function (req, res, next) {
+  // Intentionally throwing an error to trigger the error handling middleware
+  throw new Error("This is a deliberate server error for testing purposes.");
+};
+
+
+module.exports = invCont;

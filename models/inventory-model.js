@@ -1,3 +1,5 @@
+// models/inventory-model.js
+
 const pool = require("../database/")
 
 /* ***************************
@@ -25,5 +27,19 @@ async function getInventoryByClassificationId(classification_id) {
   }
 }
 
+/* ***************************
+ *  Get a specific vehicle by its ID
+ * ************************** */
+async function getInventoryById(invId) {
+  try {
+    const data = await pool.query(
+      `SELECT * FROM public.inventory WHERE inv_id = $1`,
+      [invId]
+    );
+    return data.rows[0]; // Return the single vehicle object
+  } catch (error) {
+    console.error("getInventoryById error " + error);
+  }
+}
 
-module.exports = {getClassifications, getInventoryByClassificationId};
+module.exports = { getClassifications, getInventoryByClassificationId, getInventoryById };

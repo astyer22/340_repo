@@ -1,0 +1,94 @@
+<!-- Content Heading -->
+<% if (title) { %>
+    <h1><%= title %></h1>
+<% } else { %>
+    <%- res.redirect('/') %>
+<% } %>
+
+<%- messages() %> <!-- Flash messages -->
+
+<% if (errors) { %>
+    <ul class="notice">
+   <% errors.array().forEach(error => { %>
+     <li><%= error.msg %></li>
+  <%  }) %>
+   </ul>
+  <% } %>
+
+<!-- Registration Form -->
+<form id="registrationForm" action="/account/register" method="POST" class="registration-form">
+  
+  <!-- First Name -->
+  <div class="form-group">
+    <label for="account_firstname">First Name:</label>
+    <input type="text" id="account_firstname" name="account_firstname" required placeholder="Enter your first name">
+  </div>
+
+  <!-- Last Name -->
+  <div class="form-group">
+    <label for="account_lastname">Last Name:</label>
+    <input type="text" id="account_lastname" name="account_lastname" required placeholder="Enter your last name">
+  </div>
+
+  <!-- Email Address -->
+  <div class="form-group">
+    <label for="account_email">Email Address:</label>
+    <input type="email" id="account_email" name="account_email" required placeholder="Enter your email">
+  </div>
+
+  <!-- Password -->
+  <div class="form-group">
+    <label for="account_password">Password:</label>
+    <input type="password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$" id="account_password" name="account_password" required placeholder="Enter your password">
+    <button type="button" id="togglePassword" class="btn btn-secondary">Show Password</button>
+    <small id="passwordRequirements">
+      Password must be at least 12 characters long and include at least:
+      <ul>
+        <li>1 capital letter</li>
+        <li>1 number</li>
+        <li>1 special character</li>
+      </ul>
+    </small>
+    <div id="passwordError" style="color:red; display:none;">Your password does not meet the requirements.</div>
+  </div>
+
+  <!-- Submit Button -->
+  <div class="form-group">
+    <button type="submit" class="btn">Sign Up</button>
+  </div>
+
+</form>
+
+<script>
+  const form = document.getElementById('registrationForm');
+  const passwordInput = document.getElementById('account_password');
+  const passwordError = document.getElementById('passwordError');
+  const togglePasswordButton = document.getElementById('togglePassword');
+
+//   // Password validation
+//   form.addEventListener('submit', function(event) {
+//     const password = passwordInput.value;
+
+//     // Regular expression to check the password
+//     const passwordPattern = /^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{12,}$/;
+
+//     // Check if password matches the pattern
+//     if (!passwordPattern.test(password)) {
+//       event.preventDefault(); // Prevent form submission
+//       passwordError.style.display = 'block'; // Show error message
+//     } else {
+//       passwordError.style.display = 'none'; // Hide error message
+//     }
+//   });
+
+  // Toggle password visibility
+  togglePasswordButton.addEventListener('click', function() {
+    if (passwordInput.type === 'password') {
+      passwordInput.type = 'text'; // Show the password
+      togglePasswordButton.textContent = 'Hide Password';
+    } else {
+      passwordInput.type = 'password'; // Hide the password
+      togglePasswordButton.textContent = 'Show Password';
+    }
+  });
+</script>

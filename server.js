@@ -1,4 +1,4 @@
-/* ******************************************
+/* ****************************************** Server.js File Description ******************************************
  * This server.js file is the primary file of the 
  * application. It is used to control the project.
  *******************************************/
@@ -24,6 +24,7 @@ const baseController = require("./controllers/baseController");
 const inventoryRoute = require("./routes/inventoryRoute");
 const utilities = require("./utilities/index"); // Add this line with the correct path
 const accountRoute = require("./routes/accountRoute"); // Add this line with the correct path
+const bodyParser = require("body-parser")
 
 
 /* ***********************
@@ -38,7 +39,12 @@ app.use(session({
   resave: true,
   saveUninitialized: true,
   name: 'sessionId',
-}))
+}));
+
+  app.use(bodyParser.json())
+  app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
+  
+
 
 // Express Messages Middleware
 app.use(require('connect-flash')())
@@ -47,7 +53,14 @@ app.use(function(req, res, next){
   next()
 })
 
-
+// Error Handling Middleware
+app.use((err, req, res, next) => {
+  console.error(`Error at: "${req.originalUrl}": ${err.message}`);
+  res.status(500).render("errors/error", {
+    title: "Server Error",
+    message: err.message,
+  });
+});
 
 /* ***********************
  * View Engine and Templates
@@ -63,7 +76,9 @@ app.use(static);
 
 // Index route
 app.get("/", baseController.buildHome);
+// Inventory Route
 app.use("/inv", inventoryRoute);
+// Account Route
 app.use("/account", accountRoute);
 
 // File Not Found Route - must be last route in list
