@@ -206,6 +206,14 @@ height: 130px;
   margin-left: 10px;
 }
 
+.form-group {
+  font-weight: bold;
+  font-size: 1em;
+  margin-bottom: 10px;
+}
+
+/* Vehicle Details */
+
 .vehicle-detail img {
   width: 100%;
   height: auto;

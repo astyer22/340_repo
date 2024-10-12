@@ -19,25 +19,18 @@
 <form id="registrationForm" action="/account/register" method="POST" class="registration-form">
   
   <!-- First Name -->
-  <div class="form-group">
     <label for="account_firstname">First Name:</label>
     <input type="text" id="account_firstname" name="account_firstname" required placeholder="Enter your first name">
-  </div>
-
+    <br>
   <!-- Last Name -->
-  <div class="form-group">
     <label for="account_lastname">Last Name:</label>
     <input type="text" id="account_lastname" name="account_lastname" required placeholder="Enter your last name">
-  </div>
-
+    <br>
   <!-- Email Address -->
-  <div class="form-group">
     <label for="account_email">Email Address:</label>
     <input type="email" id="account_email" name="account_email" required placeholder="Enter your email">
-  </div>
-
+    <br>
   <!-- Password -->
-  <div class="form-group">
     <label for="account_password">Password:</label>
     <input type="password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$" id="account_password" name="account_password" required placeholder="Enter your password">
     <button type="button" id="togglePassword" class="btn btn-secondary">Show Password</button>
@@ -50,7 +43,6 @@
       </ul>
     </small>
     <div id="passwordError" style="color:red; display:none;">Your password does not meet the requirements.</div>
-  </div>
 
   <!-- Submit Button -->
   <div class="form-group">
