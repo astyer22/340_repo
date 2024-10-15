@@ -230,10 +230,24 @@ height: 130px;
   border-radius: 20px;
 }
 
+/* Vehicle Management */
+.mangebutton {
+  background-color: rgba(40, 128, 229, 0.861);
+  color: var(--main-color);
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 20px;
+  font-size: 1em;
+  width: 15%;
+}
+
 footer {
   color: red;
   margin-left: 10px
 }
+
+
 
 
 /******* Media Queries for Desktop View **************/

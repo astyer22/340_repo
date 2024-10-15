@@ -47,5 +47,34 @@ invCont.triggerError = function (req, res, next) {
   throw new Error("This is a deliberate server error for testing purposes.");
 };
 
+invCont.buildManagement = async function (req, res, next) {
+  let nav = await utilities.getNav();
+  res.render("inventory/management", {
+    title: "Vehicle Management",
+    nav,
+    errors: null,
+  });
+};
+
+invCont.buildNewClassificationView = async function (req, res, next) {
+  let nav = await utilities.getNav();
+  res.render("inventory/add-classification", { 
+      title: "Add New Classification",
+      nav,
+      errors: null,
+  });
+};
+
+invCont.buildNewVehicleView = async function (req, res, next) {
+  let nav = await utilities.getNav();
+  res.render("inventory/add-vehicle", { 
+      title: "Add New Vehicle",
+      nav,
+      errors: null,
+  });
+};
+
 
 module.exports = invCont;
+
+
