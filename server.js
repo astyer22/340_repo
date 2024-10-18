@@ -9,12 +9,10 @@
 const session = require("express-session")
 const pool = require('./database/')
 
-
-
-
 /* ***********************
  * Require Statements
  *************************/
+const cookieParser = require("cookie-parser")
 const express = require("express");
 const expressLayouts = require("express-ejs-layouts");
 const env = require("dotenv").config();
@@ -22,10 +20,9 @@ const app = express();
 const static = require("./routes/static");
 const baseController = require("./controllers/baseController");
 const inventoryRoute = require("./routes/inventoryRoute");
-const utilities = require("./utilities/index"); // Add this line with the correct path
-const accountRoute = require("./routes/accountRoute"); // Add this line with the correct path
+const utilities = require("./utilities/index");
+const accountRoute = require("./routes/accountRoute"); 
 const bodyParser = require("body-parser")
-
 
 /* ***********************
  * Middleware
@@ -41,26 +38,27 @@ app.use(session({
   name: 'sessionId',
 }));
 
-  app.use(bodyParser.json())
-  app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
-  
-
-
 // Express Messages Middleware
 app.use(require('connect-flash')())
 app.use(function(req, res, next){
-  res.locals.messages = require('express-messages')(req, res)
+res.locals.messages = require('express-messages')(req, res)
   next()
 })
 
-// Error Handling Middleware
-app.use((err, req, res, next) => {
-  console.error(`Error at: "${req.originalUrl}": ${err.message}`);
-  res.status(500).render("errors/error", {
-    title: "Server Error",
-    message: err.message,
-  });
-});
+// Body Parser Middleware
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true })) 
+  
+// Cookie Parser Middleware
+app.use(cookieParser());
+
+// JWT Token Validation Middleware
+app.use(utilities.checkJWTToken);  // Added JWT middleware here
+
+
+
+
+
 
 /* ***********************
  * View Engine and Templates
@@ -92,7 +90,7 @@ app.use(async (req, res, next) => {
 * Place after all other middleware
 *************************/
 app.use(async (err, req, res, next) => {
-  let nav = await utilities.getNav(); // Use utilities here
+  let nav = await utilities.getNav(); 
   console.error(`Error at: "${req.originalUrl}": ${err.message}`);
   res.render("errors/error", {
     title: err.status || 'Server Error',
@@ -100,6 +98,8 @@ app.use(async (err, req, res, next) => {
     nav
   });
 });
+
+
 
 /* ***********************
  * Local Server Information

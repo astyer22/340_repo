@@ -4,20 +4,22 @@ const accountController = require('../controllers/accountController.js');
 const utilities = require('../utilities/index.js'); 
 const regValidate = require('../utilities/account-validation')
 
+// Route: GET /account/
+router.get(
+    '/',
+    utilities.handleErrors(accountController.getAccount) 
+  );
 
 // Route: GET /account/login
 router.get(
     '/login',
     utilities.handleErrors(accountController.buildLogin) 
   );
-
 // Route: GET /account/register
 router.get(
     '/register',
     utilities.handleErrors(accountController.buildRegister) 
   );
-
-
 // Process the registration data
 router.post(
     "/register",
@@ -25,21 +27,18 @@ router.post(
     regValidate.checkRegData,
     utilities.handleErrors(accountController.registerAccount)
   );
-
-  // Process the login attempt
+// Process the login request
 router.post(
   "/login",
   regValidate.loginRules(),
   regValidate.checkLoginData,
-  utilities.handleErrors(accountController.loginAccount)
+  utilities.handleErrors(accountController.accountLogin)
 )
 
 // Process the login attempt
 router.post(
   "/login",
-  (req, res) => {
-    res.status(200).send('login process')
-  }
+  accountController.accountLogin
 )
 
 module.exports = router;

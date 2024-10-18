@@ -80,20 +80,20 @@ validate.checkRegData = async (req, res, next) => {
  /*  **********************************
   * Login Data Validation Rules
   * ********************************* */
-  validate.loginRules = () => {
-    return [
-      // valid email is required and cannot already exist in the database
-      body("account_email")
-        .trim()
-        .isEmail()
-        .normalizeEmail() // refer to validator.js docs
-        .withMessage("A valid email is required.")
-        .custom(async (account_email) => {
-          const emailExists = await accountModel.checkExistingEmail(account_email)
-          if (emailExists){
-            throw new Error("Email exists. Please log in or use different email")
-          }
+ validate.loginRules = () => {
+  return [
+    body("account_email")
+      .trim()
+      .isEmail()
+      .normalizeEmail()
+      .withMessage("A valid email is required.")
+      .custom(async (account_email) => {
+        const emailExists = await accountModel.checkExistingEmail(account_email)
+        if (!emailExists) {
+          throw new Error("Email not found. Please register.")
+        }
       }),
+
 
       // password is required and must be strong password
       body("account_password")

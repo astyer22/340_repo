@@ -1,0 +1,27 @@
+
+<% if (title) { %>
+  <h1><%= title %></h1>
+<% } else { %>
+  <%- res.redirect('/') %>
+<% } %>
+
+<!-- <%- messages() %> -->
+
+<!-- Error Handling -->
+<% if (errors) { %>
+<ul class="notice">
+  <% errors.array().forEach(error => { %>
+    <li><%= error.msg %></li>
+  <% }) %>
+</ul>
+<% } %>
+
+
+
+<p>You're logged in.</p>
+<p>Welcome to your account dashboard!</p> 
+
+<div class="account-actions">
+<a href="/account/profile" class="btn">View Profile</a>
+<a href="/account/settings" class="btn">Account Settings</a>
+</div> 
