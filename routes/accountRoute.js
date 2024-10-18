@@ -7,7 +7,7 @@ const regValidate = require('../utilities/account-validation')
 // Route: GET /account/
 router.get(
     '/',
-    utilities.handleErrors(accountController.getAccount) 
+    utilities.handleErrors(accountController.buildAccount) 
   );
 
 // Route: GET /account/login

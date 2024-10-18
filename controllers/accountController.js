@@ -107,7 +107,7 @@ async function accountLogin(req, res) {
       } else {
         res.cookie("jwt", accessToken, { httpOnly: true, secure: true, maxAge: 3600 * 1000 })
       }
-      return res.redirect("/account/")
+      return res.redirect("/management/")
     }
     else {
       req.flash("message notice", "Please check your credentials and try again.")
@@ -126,13 +126,14 @@ async function accountLogin(req, res) {
 // Build account view
 async function buildAccount(req, res, next) {
   let nav = await utilities.getNav()
-  res.render("/account/", {
+  res.render("account/management", {
     title: "Your Account",
     nav,
     content: "You're Logged In!",
     errors: null,
   })
 }
+
 
 
 
