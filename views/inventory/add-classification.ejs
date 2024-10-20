@@ -3,16 +3,61 @@
 <!-- Content Heading -->
 <% if (title) { %>
     <h1><%= title %></h1>
-    <% } else {
-        res.rediredct('/')
-    } %>
+<% } else {
+    res.redirect('/'); 
+} %>
 
 <%- messages() %> <!-- Flash messages -->
 
 <% if (errors) { %>
     <ul class="notice">
-    <% errors.array().forEach(error => { %>
-    <li><%= error.msg %></li>
-<%  }) %>
+        <% errors.array().forEach(error => { %>
+            <li><%= error.msg %></li>
+        <% }) %>
     </ul>
 <% } %>
+
+<form id="classificationForm" action="add-classification" method="POST">
+    <div>
+        <label for="classification-name">Classification Name:</label>
+        <input 
+            type="text" 
+            id="classificationName" 
+            name="classification_name" 
+            required 
+            pattern="^[a-zA-Z0-9]+$" 
+            title="Classification name must not contain spaces or special characters."
+        >
+        <small id="validationMessage"></small> 
+    </div>
+    <div>
+        <button type="submit">Add Classification</button>
+    </div>
+</form>
+
+<script>
+     document.addEventListener('DOMContentLoaded', function() {
+        const classificationForm = document.getElementById('classificationForm');
+
+        if (classificationForm) {
+            classificationForm.addEventListener('submit', function(event) {
+                const classificationNameInput = document.getElementById('classificationName');
+                const validationMessage = document.getElementById('validationMessage');
+
+                // Regular expression to match alphanumeric characters only
+                const isValid = /^[a-zA-Z0-9]+$/.test(classificationNameInput.value);
+
+                if (!isValid) {
+                    // Prevent form submission
+                    event.preventDefault(); 
+                    validationMessage.textContent = 'Invalid input: Classification name must not contain spaces or special characters.';
+                    classificationNameInput.focus();
+                } else {
+                    // Clear the message if valid
+                    validationMessage.textContent = ''; 
+                }
+            });
+        }
+    });
+</script>
+

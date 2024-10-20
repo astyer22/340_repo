@@ -1,9 +1,11 @@
 // routes/inventoryRoute.js
 
 // Needed Resources 
-const express = require("express")
-const router = new express.Router() 
-const invController = require("../controllers/invController")
+const express = require("express");
+const router = new express.Router(); 
+const invController = require("../controllers/invController");
+const regValidate = require("../utilities/inventory-validation");
+const utilities = require("../utilities/index.js");
 
 // GETS
 // Route to build inventory by classification view
@@ -16,10 +18,13 @@ router.get("/error/trigger-error", invController.triggerError);
 router.get("/management", invController.buildManagement);
 // Route to render add new classification view
 router.get("/add-classification", invController.buildNewClassificationView);
-// Route to render add new vehicle view
-router.get("/add-vehicle", invController.buildNewVehicleView);
 
-
-
+// POSTS
+// POST route to handle new classification form submission
+router.post(
+    "/add-classification",
+    regValidate.classificationRules(), // Server-side validation middleware
+    utilities.handleErrors(invController.addNewClassification) // Ensure this calls the correct controller
+);
 
 module.exports = router;

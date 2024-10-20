@@ -242,6 +242,18 @@ height: 130px;
   width: 15%;
 }
 
+/* classification form */
+#classificationForm {
+  border: 3px solid black;
+  border-radius: 10px;
+  background-color: rgba(40, 128, 229, 0.861);
+  font-weight: bold;
+  color: black;
+  padding: 10px;
+  width: 50%;
+  margin-left: 10px;
+}
+
 footer {
   color: red;
   margin-left: 10px

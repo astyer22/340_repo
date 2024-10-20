@@ -75,6 +75,30 @@ invCont.buildNewVehicleView = async function (req, res, next) {
   });
 };
 
+invCont.addNewClassification = async function (req, res, next) {
+  const { classification_name } = req.body;
+
+  try {
+      // Attempt to add the new classification
+      const result = await invModel.addNewClassification(classification_name);
+          if (result) {
+          // If successful, redirect to the inventory management page
+          req.flash('success', 'Classification added successfully!'); 
+          res.redirect("/inv/management");
+      } else {
+          // If the result is false, there was an issue with the operation
+          req.flash('error', 'Failed to add classification.'); 
+          return res.render('/', {
+              title: 'Add Classification',
+              errors: [{ msg: 'Failed to add classification. Please try again.' }] 
+          });
+      }
+  } catch (error) {
+      // Catch any unexpected errors
+      next({ status: 500, message: error.message || "Internal server error." });
+  }
+};
+
 
 module.exports = invCont;
 
