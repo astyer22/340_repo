@@ -18,6 +18,8 @@ router.get("/error/trigger-error", invController.triggerError);
 router.get("/management", invController.buildManagement);
 // Route to render add new classification view
 router.get("/add-classification", invController.buildNewClassificationView);
+// Route to render add new inventory view
+router.get("/add-inventory", invController.buildNewInventoryView);
 
 // POSTS
 // POST route to handle new classification form submission
@@ -26,5 +28,10 @@ router.post(
     regValidate.classificationRules(), // Server-side validation middleware
     utilities.handleErrors(invController.addNewClassification) // Ensure this calls the correct controller
 );
+// Route to handle form submission
+router.post(
+    "/add-inventory", 
+    regValidate.addInventoryRules(),
+    utilities.handleErrors(invController.addNewInventory));
 
 module.exports = router;

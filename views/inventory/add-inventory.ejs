@@ -1,0 +1,183 @@
+  <!-- Content Heading -->
+  <% if (title) { %>
+    <h1><%= title %></h1>
+  <% } else { %>
+    <% res.redirect('/'); %>
+  <% } %>
+
+     <!-- Display Flash Messages -->
+     <%- messages() %> 
+
+     <!-- Display Server-Side Errors -->
+     <% if (errors) { %>
+       <ul class="error-list">
+         <% errors.array().forEach((error) => { %>
+           <li><%= error.msg %></li>
+         <% }) %>
+       </ul>
+     <% } %>
+ 
+     <!-- Vehicle Inventory Form -->
+     <form id="addInventoryForm" action="/inv/add-inventory" method="POST">
+       <!-- Classification Dropdown -->
+       <div>
+         <label for="classification">Classification:</label>
+         <select id="classification" name="classification_id" required>
+           <option value="">Select Classification</option>
+           <% classifications.forEach((classification) => { %>
+             <option 
+               value="<%= classification.classification_id %>" 
+               <%= classification.classification_id == classification_id ? 'selected' : '' %>>
+               <%= classification.classification_name %>
+             </option>
+           <% }) %>
+         </select>
+       </div>
+ 
+       <!-- Vehicle Make -->
+       <div>
+         <label for="invMake">Make:</label>
+         <input 
+           type="text" 
+           id="invMake" 
+           name="inv_make" 
+           value="<%= inv_make %>" 
+           required 
+         >
+       </div>
+ 
+       <!-- Vehicle Model -->
+       <div>
+         <label for="invModel">Model:</label>
+         <input 
+           type="text" 
+           id="invModel" 
+           name="inv_model" 
+           value="<%= inv_model %>" 
+           required 
+         >
+       </div>
+ 
+       <!-- Vehicle Year -->
+       <div>
+         <label for="invYear">Year:</label>
+         <input 
+           type="number" 
+           id="invYear" 
+           name="inv_year" 
+           value="<%= inv_year %>" 
+           required 
+           min="1900" 
+           max="<%= new Date().getFullYear() %>"
+         >
+       </div>
+ 
+       <!-- Vehicle Price -->
+       <div>
+         <label for="invPrice">Price:</label>
+         <input 
+           type="number" 
+           id="invPrice" 
+           name="inv_price" 
+           value="<%= inv_price %>" 
+           required 
+           step="0.01" 
+           min="0"
+         >
+       </div>
+ 
+       <!-- Vehicle Miles -->
+       <div>
+         <label for="invMiles">Miles:</label>
+         <input 
+           type="number" 
+           id="invMiles" 
+           name="inv_miles" 
+           value="<%= inv_miles %>" 
+           required 
+           min="0"
+         >
+       </div>
+ 
+       <!-- Vehicle Color -->
+       <div>
+         <label for="invColor">Color:</label>
+         <input 
+           type="text" 
+           id="invColor" 
+           name="inv_color" 
+           value="<%= inv_color %>" 
+           required
+         >
+       </div>
+
+       <!-- Vehicle Description -->
+       <div>
+        <label for="invDescription">Description:</label>
+        <textarea 
+          id="invDescription" 
+          name="inv_description" 
+          required><%= inv_description %></textarea>
+      </div>
+ 
+       <!-- Vehicle Image Paths -->
+       <div>
+         <label for="invImage">Vehicle Image Path:</label>
+         <input 
+           type="text" 
+           id="invImage" 
+           name="inv_image" 
+           value="<%= inv_image || '/images/vehicles/no-image.png' %>" 
+           required
+         >
+       </div>
+ 
+       <div>
+         <label for="invThumbnail">Thumbnail Image Path:</label>
+         <input 
+           type="text" 
+           id="invThumbnail" 
+           name="inv_thumbnail" 
+           value="<%= inv_thumbnail || '/images/vehicles/no-image-tn.png' %>" 
+           required
+         >
+       </div>
+ 
+       <!-- Submit Button -->
+       <div>
+         <button type="submit">Add Vehicle</button>
+       </div>
+     </form>
+ 
+     <div id="errorMessages" class="error-messages" style="display:none;"></div>
+   </main>
+ 
+   <!-- Client-side Validation Script -->
+   <script>
+     document.addEventListener('DOMContentLoaded', function() {
+       const form = document.querySelector('form');
+       const errorMessagesDiv = document.getElementById('errorMessages');
+ 
+       form.addEventListener('submit', function(event) {
+         errorMessagesDiv.innerHTML = ''; // Clear previous errors
+         errorMessagesDiv.style.display = 'none';
+ 
+         const requiredFields = ['invMake', 'invModel', 'invYear', 'invPrice', 'invMiles', 'invColor'];
+         let hasError = false;
+ 
+         requiredFields.forEach(fieldId => {
+           const field = document.getElementById(fieldId);
+           if (!field.value.trim()) {
+             hasError = true;
+             const errorMsg = `<p>${field.name.replace('inv_', '')} is required.</p>`;
+             errorMessagesDiv.innerHTML += errorMsg;
+           }
+         });
+ 
+         if (hasError) {
+           event.preventDefault(); // Prevent form submission if there are errors
+           errorMessagesDiv.style.display = 'block';
+         }
+       });
+     });
+   </script>
