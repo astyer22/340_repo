@@ -20,6 +20,12 @@ router.get("/management", invController.buildManagement);
 router.get("/add-classification", invController.buildNewClassificationView);
 // Route to render add new inventory view
 router.get("/add-inventory", invController.buildNewInventoryView);
+// Route to get inventory by classification ID
+router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON));
+// Route to render edit vehicle view
+router.get("/edit/:invId", invController.buildEditInventoryView);
+// Route to edit vehicle
+router.post("/update/", utilities.handleErrors(invController.updateInventory));
 
 // POSTS
 // POST route to handle new classification form submission
@@ -33,5 +39,8 @@ router.post(
     "/add-inventory", 
     regValidate.addInventoryRules(),
     utilities.handleErrors(invController.addNewInventory));
+
+// Route to handle vehicle retrieval by classification
+router.post('/add-inventory', invController.getVehiclesByClassification);
 
 module.exports = router;

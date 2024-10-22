@@ -3,17 +3,17 @@
 <!-- Content Heading -->
 <% if (title) { %>
     <h1><%= title %></h1>
-    <% } else {
-        res.rediredct('/')
-    } %>
+<% } else {
+    res.redirect('/');
+} %>
 
 <%- messages() %> <!-- Flash messages -->
 
 <% if (errors) { %>
     <ul class="notice">
-    <% errors.array().forEach(error => { %>
-    <li><%= error.msg %></li>
-<%  }) %>
+        <% errors.array().forEach(error => { %>
+            <li><%= error.msg %></li>
+        <% }) %>
     </ul>
 <% } %>
 
@@ -26,3 +26,21 @@
 <form class="mangebutton" action="/inv/add-inventory" method="GET">
     <button type="submit">Add New Vehicle</button>
 </form>
+
+<h2>Manage Inventory</h2>
+<p>Please choose a classification from the list to view the corresponding vehicles.</p>
+
+<!-- Render the classification dropdown -->
+<form action="/inv/add-inventory" method="POST">
+    <label for="classificationList">Select Classification:</label>
+    
+    <!-- Insert the classification dropdown HTML -->
+    <%- classificationSelect %>
+</form>
+
+<table id="inventoryDisplay"></table>
+
+<!-- Displays message if script stops working -->
+<noscript>JavaScript must be enabled to use this page.</noscript>
+
+<script src="../../js/inventory.js"></script>
