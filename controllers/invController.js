@@ -36,8 +36,8 @@ invCont.buildByClassificationId = async function (req, res, next) {
  *  Build vehicle detail view by ID
  * ************************** */
 invCont.buildByInventoryId = async function (req, res, next) {
-  const invId = req.params.invId;
-  const vehicle = await invModel.getInventoryById(invId);
+  const inv_id = req.params.invId;
+  const vehicle = await invModel.getInventoryById(inv_id);
   
   if (vehicle) {
     const nav = await utilities.getNav();
@@ -102,68 +102,32 @@ invCont.getVehiclesByClassification = async function (req, res, next) {
 };
 
 /* ***************************
-  *  Build vehicle Edit view by ID
-  * ************************** */
-// invCont.buildEditInventoryView = async function (req, res, next) {
-//   const invId = req.params.invId;
-//   const vehicle = await invModel.updateInventory(invId);
-//   const classifications = await invModel.getClassifications();
-
-//   if (vehicle) {
-//     const nav = await utilities.getNav();
-//     res.render("inventory/update", {
-//       title: "Edit Vehicle",
-//       nav,
-//       classifications: classifications.rows,
-//       vehicle,
-//       errors: null,
-//     });
-//   } else {
-//     next({ status: 404, message: "Vehicle not found." });
-//   }
-// }
-
-// //* ***************************
-// *  Build vehicle Edit view by ID
-// * ************************** */
+ *  Build edit inventory view
+ * ************************** */
 invCont.buildUpdateView = async function (req, res, next) {
- try {
-   // Collect and parse the incoming inventory_id from the request parameters
-   const invId = parseInt(req.params.inv_id, 10);
-
-   // Fetch classifications and navigation
-   const classifications = await invModel.getClassifications();
-   let nav = await utilities.getNav();
-
-   // Fetch vehicle details by inventory ID
-   const vehicle = await invModel.getInventoryById(invId);
-   
-   if (!vehicle) {
-     // If vehicle is not found, handle error (e.g., redirect or send a 404 response)
-     return next({ status: 404, message: "Vehicle not found" });
-   }
-
-   // Render the edit view, passing the vehicle details
-   res.render("inventory/update", {
-     title: "Edit Vehicle",
-     nav,
-     classifications: classifications.rows,
-     classification_id: vehicle.classification_id, 
-     inv_make: vehicle.make,  
-     inv_model: vehicle.model,
-     inv_year: vehicle.year,
-     inv_description: vehicle.description,
-     inv_image: vehicle.image,
-     inv_thumbnail: vehicle.thumbnail,
-     inv_price: vehicle.price,
-     inv_miles: vehicle.miles,
-     inv_color: vehicle.color,
-     errors: null,
-   });
- } catch (error) {
-   next({ status: 500, message: error.message });
- }
-};
+  const inv_id = parseInt(req.params.inv_id)
+  let nav = await utilities.getNav()
+  const itemData = await invModel.getInventoryById(inv_id)
+  const classificationSelect = await utilities.buildClassificationList(itemData.classification_id)
+  const itemName = `${itemData.inv_make} ${itemData.inv_model}`
+  res.render("./inventory/update", {
+    title: "Edit " + itemName,
+    nav,
+    classifications: classificationSelect,
+    errors: null,
+    inv_id: itemData.inv_id,
+    inv_make: itemData.inv_make,
+    inv_model: itemData.inv_model,
+    inv_year: itemData.inv_year,
+    inv_description: itemData.inv_description,
+    inv_image: itemData.inv_image,
+    inv_thumbnail: itemData.inv_thumbnail,
+    inv_price: itemData.inv_price,
+    inv_miles: itemData.inv_miles,
+    inv_color: itemData.inv_color,
+    classification_id: itemData.classification_id
+  })
+}
 
 /* ***************************
  *  Update Inventory Data
