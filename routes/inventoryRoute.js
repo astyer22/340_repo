@@ -23,7 +23,7 @@ router.get("/add-inventory", invController.buildNewInventoryView);
 // Route to get inventory by classification ID
 router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON));
 // Route to render edit vehicle view
-router.get("/edit/:invId", invController.buildEditInventoryView);
+router.get("/update/:inv_id", invController.buildUpdateView);
 // Route to edit vehicle
 router.post("/update/", utilities.handleErrors(invController.updateInventory));
 

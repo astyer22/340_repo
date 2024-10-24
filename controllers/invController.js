@@ -58,6 +58,10 @@ invCont.triggerError = function (req, res, next) {
   throw new Error("This is a deliberate server error for testing purposes.");
 };
 
+
+/* ***************************
+  *  Build inventory management view
+  * ************************** */
 invCont.buildManagement = async function (req, res, next) {
   try {
     const nav = await utilities.getNav(); // Fetch navigation data
@@ -75,6 +79,9 @@ invCont.buildManagement = async function (req, res, next) {
   }
 };
 
+/* ***************************
+  *  Get vehicles by classification
+  * ************************** */
 invCont.getVehiclesByClassification = async function (req, res, next) {
   try {
     const nav = await utilities.getNav(); // Fetch navigation data
@@ -94,24 +101,27 @@ invCont.getVehiclesByClassification = async function (req, res, next) {
   }
 };
 
-invCont.buildEditInventoryView = async function (req, res, next) {
-  const invId = req.params.invId;
-  const vehicle = await invModel.getInventoryById(invId);
-  const classifications = await invModel.getClassifications();
+/* ***************************
+  *  Build vehicle Edit view by ID
+  * ************************** */
+// invCont.buildEditInventoryView = async function (req, res, next) {
+//   const invId = req.params.invId;
+//   const vehicle = await invModel.updateInventory(invId);
+//   const classifications = await invModel.getClassifications();
 
-  if (vehicle) {
-    const nav = await utilities.getNav();
-    res.render("inventory/update", {
-      title: "Edit Vehicle",
-      nav,
-      classifications: classifications.rows,
-      vehicle,
-      errors: null,
-    });
-  } else {
-    next({ status: 404, message: "Vehicle not found." });
-  }
-}
+//   if (vehicle) {
+//     const nav = await utilities.getNav();
+//     res.render("inventory/update", {
+//       title: "Edit Vehicle",
+//       nav,
+//       classifications: classifications.rows,
+//       vehicle,
+//       errors: null,
+//     });
+//   } else {
+//     next({ status: 404, message: "Vehicle not found." });
+//   }
+// }
 
 // //* ***************************
 // *  Build vehicle Edit view by ID
@@ -119,7 +129,7 @@ invCont.buildEditInventoryView = async function (req, res, next) {
 invCont.buildUpdateView = async function (req, res, next) {
  try {
    // Collect and parse the incoming inventory_id from the request parameters
-   const invId = parseInt(req.params.invId, 10);
+   const invId = parseInt(req.params.inv_id, 10);
 
    // Fetch classifications and navigation
    const classifications = await invModel.getClassifications();
@@ -155,64 +165,65 @@ invCont.buildUpdateView = async function (req, res, next) {
  }
 };
 
-/* ********************
-  Add a new inventory item
-************************** */
-
-invCont.updateInventoryItem = async function (req, res, next) {
+/* ***************************
+ *  Update Inventory Data
+ * ************************** */
+invCont.updateInventory = async function (req, res, next) {
+  let nav = await utilities.getNav()
   const {
+    inv_id,
+    inv_make,
+    inv_model,
+    inv_description,
+    inv_image,
+    inv_thumbnail,
+    inv_price,
+    inv_year,
+    inv_miles,
+    inv_color,
     classification_id,
+  } = req.body
+  const updateResult = await invModel.updateInventory(
+    inv_id,  
+    inv_make,
+    inv_model,
+    inv_description,
+    inv_image,
+    inv_thumbnail,
+    inv_price,
+    inv_year,
+    inv_miles,
+    inv_color,
+    classification_id
+  )
+
+  if (updateResult) {
+    const itemName = updateResult.inv_make + " " + updateResult.inv_model
+    req.flash("notice", `The ${itemName} was successfully updated.`)
+    res.redirect("/inv/")
+  } else {
+    const classificationSelect = await utilities.buildClassificationList(classification_id)
+    const itemName = `${inv_make} ${inv_model}`
+    req.flash("notice", "Sorry, the insert failed.")
+    res.status(501).render("inventory/edit-inventory", {
+    title: "Edit " + itemName,
+    nav,
+    classificationSelect: classificationSelect,
+    errors: null,
+    inv_id,
     inv_make,
     inv_model,
     inv_year,
     inv_description,
-    inv_image = 'path/to/no-image.png', // Default path for no image
-    inv_thumbnail = 'path/to/no-image-tn.png', // Default path for thumbnail
+    inv_image,
+    inv_thumbnail,
     inv_price,
     inv_miles,
     inv_color,
-  } = req.body;
-
-  try {
-    const result = await invModel.updateInventoryItem({
-      classification_id,
-      inv_make,
-      inv_model,
-      inv_year,
-      inv_description,
-      inv_image,
-      inv_thumbnail,
-      inv_price,
-      inv_miles,
-      inv_color,
-      });
-
-      if (result) {
-        req.flash('success', 'Vehicle update successfully!');
-        res.redirect("/inv/management");
-      } else {
-        req.flash('error', 'Failed to update vehicle.');
-        return res.render('inventory/update', {
-          title: 'Update Vehicle',
-          nav: await utilities.getNav(),
-          classifications: await invModel.getClassifications(),
-          classification_id: null,
-          inv_make: '',
-          inv_model: '',
-          inv_year: '',
-          inv_description: '',
-          inv_image: '',
-          inv_thumbnail: '',
-          inv_price: '',
-          inv_miles: '',
-          inv_color: '',
-          errors: [{ msg: 'Failed to update vehicle. Please try again.' }],
-          });
-      }
-  } catch (error) {
-      next({ status: 500, message: error.message || "Internal server error." });
+    classification_id
+    })
   }
-};
+}
 
 
 
