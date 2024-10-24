@@ -36,7 +36,7 @@ invCont.buildByClassificationId = async function (req, res, next) {
  *  Build vehicle detail view by ID
  * ************************** */
 invCont.buildByInventoryId = async function (req, res, next) {
-  const invId = req.params.invId;
+  const invId = req.params.inv_id;
   const vehicle = await invModel.getInventoryById(invId);
   
   if (vehicle) {
