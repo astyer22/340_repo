@@ -24,8 +24,9 @@ router.get("/add-inventory", invController.buildNewInventoryView);
 router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON));
 // Route to render edit vehicle view
 router.get("/update/:inv_id", invController.buildUpdateView);
-// Route to edit vehicle
-router.post("/update/", utilities.handleErrors(invController.updateInventory));
+// Route to render delete vehicle view
+router.get("/delete-confirm/:inv_id", utilities.handleErrors(invController.buildDeleteView));
+
 
 // POSTS
 // POST route to handle new classification form submission
@@ -39,8 +40,11 @@ router.post(
     "/add-inventory", 
     regValidate.addInventoryRules(),
     utilities.handleErrors(invController.addNewInventory));
-
 // Route to handle vehicle retrieval by classification
 router.post('/add-inventory', invController.getVehiclesByClassification);
+// Route to edit vehicle
+router.post("/update/", utilities.handleErrors(invController.updateInventory));
+// Route to delete vehicle
+router.post("/delete-confirm/", utilities.handleErrors(invController.deleteInventoryData));
 
 module.exports = router;

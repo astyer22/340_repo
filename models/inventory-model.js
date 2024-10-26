@@ -139,11 +139,30 @@ async function updateInventory(
     }
   }
 
+/* ***************************
+ *  Delete Inventory Item
+ * ************************** */
+async function deleteInventory(inv_id) {
+    // This function carries out a deletion of the inventory item
+    try {
+        // SQL statement to delete an inventory item based on its inv_id
+        const sql = 'DELETE FROM inventory WHERE inv_id = $1'; 
+        const result = await pool.query(sql, [inv_id]); 
+        return result.rowCount; 
+    } catch (error) {
+        console.error("Model error: " + error);
+        return 0; // Return 0 for any error that occurs during the deletion process
+    }
+}
+
+
+
 module.exports = { 
     getClassifications, 
     getInventoryByClassificationId, 
     getInventoryById, 
     addNewClassification,
     addInventoryItem,
-    updateInventory
+    updateInventory,
+    deleteInventory
 };

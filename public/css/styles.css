@@ -315,7 +315,7 @@ height: 130px;
   margin-bottom: 10px;
 }
 
-#edit-Inventory_form {
+#updateForm {
   border: 3px solid black;
   border-radius: 10px;
   background-color: rgba(40, 128, 229, 0.861);
@@ -327,6 +327,21 @@ height: 130px;
 }
 
 #edit-Inventory_form input, select {
+  margin-bottom: 10px;
+}
+
+#deleteForm {
+  border: 3px solid black;
+  border-radius: 10px;
+  background-color: rgba(40, 128, 229, 0.861);
+  font-weight: bold;
+  color: black;
+  padding: 10px;
+  width: 50%;
+  margin-left: 10px;
+}
+
+#deleteForm input, select {
   margin-bottom: 10px;
 }
 

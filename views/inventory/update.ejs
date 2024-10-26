@@ -18,7 +18,7 @@
      <% } %>
  
      <!-- Vehicle Inventory Form -->
-     <form id="edit-Inventory_form" action="inventory/update" method="POST">
+     <form id="updateForm" action="/inv/update" method="POST">
        <!-- Classification Dropdown -->
       <%- classifications %>
  
@@ -133,42 +133,15 @@
  
        <!-- Submit Button -->
        <div>
-         <button type="submit">Updating Vehicle</button>
-         <input type="hidden" name="inv_id"
-    <% if(locals.inv_id) { %> value="<%= locals.inv_id %>"
-    <% } %>>
-       </div>
+        <button type="submit" disabled>Updating Vehicle</button>
+        <input type="hidden" name="inv_id"
+          <% if (locals.inv_id) { %> value="<%= locals.inv_id %>" <% } %> >
+      </div>
+      
      </form>
  
      <div id="errorMessages" class="error-messages" style="display:none;"></div>
    </main>
  
-   <!-- Client-side Validation Script -->
-   <script>
-     document.addEventListener('DOMContentLoaded', function() {
-       const form = document.querySelector('form');
-       const errorMessagesDiv = document.getElementById('errorMessages');
- 
-       form.addEventListener('submit', function(event) {
-         errorMessagesDiv.innerHTML = ''; // Clear previous errors
-         errorMessagesDiv.style.display = 'none';
- 
-         const requiredFields = ['invMake', 'invModel', 'invYear', 'invPrice', 'invMiles', 'invColor'];
-         let hasError = false;
- 
-         requiredFields.forEach(fieldId => {
-           const field = document.getElementById(fieldId);
-           if (!field.value.trim()) {
-             hasError = true;
-             const errorMsg = `<p>${field.name.replace('inv_', '')} is required.</p>`;
-             errorMessagesDiv.innerHTML += errorMsg;
-           }
-         });
- 
-         if (hasError) {
-           event.preventDefault(); // Prevent form submission if there are errors
-           errorMessagesDiv.style.display = 'block';
-         }
-       });
-     });
-   </script>
+  <!-- Link to External JS File -->
+<script src="/js/inv-update.js"></script>
