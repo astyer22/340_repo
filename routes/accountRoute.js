@@ -20,25 +20,32 @@ router.get(
 router.get(
     '/register', utilities.handleErrors(accountController.buildRegister) 
   );
- // Logout route
-
-router.get("/logout", (req, res) => {
-  req.session.destroy(err => {
-    if (err) {
-      console.error(err); // Log any error that occurs
-      return res.status(500).send("Could not log out. Please try again later.");
-    }
-
-    // Clear the JWT cookie
-    res.clearCookie("jwt");
-
-    // Set a flash message
-    req.session.flashMessage = "You have been logged out successfully.";
-
-    // Redirect to the home page
-    res.redirect("/"); // Change this if you want to redirect to a specific page after logout
+  // / Logout route
+  router.get("/logout", (req, res) => {
+    req.session.destroy(err => {
+      if (err) {
+        console.error(err); // Log any error that occurs
+        return res.status(500).send("Could not log out. Please try again later.");
+      }
+  
+      // Clear the JWT cookie
+      res.clearCookie("jwt");
+  
+      // Set a flash message using connect-flash
+      req.flash('success', 'You have been logged out successfully.');
+  
+      // Redirect to the logout confirmation page
+      res.redirect("/logout-confirmation");
+    });
   });
-});
+  
+  // Route for logout confirmation
+  router.get('/logout-confirmation', (req, res) => {
+    const title = 'Logout Confirmation';
+    const messages = req.flash('success'); // Retrieve flash messages
+    const errors = []; // You can adjust this if you have validation errors
+    res.render('logout', { title, messages, errors }); // Render your logout page
+  });
 
 // Route: GET /account/account-update/:id
 router.get('/account-update/:id', accountController.buildAccountUpdateView);

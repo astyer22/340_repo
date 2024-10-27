@@ -76,6 +76,21 @@ function checkAdmin(req, res, next) {
   }
 }
 
+app.use(session({
+  secret: 'your-secret-key',
+  resave: false,
+  saveUninitialized: false,
+}));
+
+app.use(flash()); // Enable flash messages
+
+// Middleware to make flash messages available in your views
+app.use((req, res, next) => {
+  res.locals.messages = req.flash('success');
+  res.locals.errors = req.flash('error'); // If you are also handling errors
+  next();
+});
+
 // Example route using the admin check middleware
 app.use('/inventory', checkAdmin, inventoryRoute); // Apply the middleware to the inventory route
 
