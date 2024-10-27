@@ -8,16 +8,14 @@
   box-sizing: border-box;
 }
 
-
-:root
-{
+:root {
   --main-color: white;
   --secondary-color: #333;
   --tertiary-color: rgb(5, 5, 5);
   --quaternary-color: rgba(40, 128, 229, 0.861);
 }
 
-body { 
+body {
   font-family: Verdana, sans-serif;
   background-image: url('../images/site/small_check.jpg');
 }
@@ -31,11 +29,9 @@ body {
   max-width: 500px;
   border-style: solid;
   border-width: 4px;
-  border-color:rgba(40, 128, 229, 0.861);
+  border-color: rgba(40, 128, 229, 0.861);
   border-radius: 15px;
-  margin: auto;
 }
-
 
 header {
   display: flex;
@@ -53,28 +49,28 @@ header {
 }
 
 nav {
-  background-color: var(--tertiary-color);                            
-  align-items: center;                      /* Vertically center the items */      
-  color: var(--quaternary-color); 
-  padding: 1em;               
+  background-color: var(--tertiary-color);
+  align-items: center; /* Vertically center the items */
+  color: var(--quaternary-color);
+  padding: 1em;
 }
 
 nav ul {
-  display: flex; 
+  display: flex;
   justify-content: space-evenly;
   list-style-type: none;
   max-width: 100%;
   padding: 0;
 }
 
- nav a {
-  color: var(--main);          
-  text-decoration: none;                                        
-  font-weight: bold;   
+nav a {
+  color: var(--main-color);
+  text-decoration: none;
+  font-weight: bold;
 }
 
 nav a:hover {
-  color: var(--main);            /* Change color on hover */
+  color: var(--main-color); /* Change color on hover */
 }
 
 #d-sm {
@@ -97,14 +93,13 @@ h2 {
   padding: 10px;
 }
 
-
 #main-hero {
-text-align: center;
-height: 130px;
-} 
+  text-align: center;
+  height: 130px;
+}
 
 #fuzzy-dice {
-  font-weight: heavy;
+  font-weight: bold;
   color: rgba(19, 56, 99, 0.973);
   background-color: var(--main-color);
   opacity: 0.8;
@@ -138,7 +133,7 @@ height: 130px;
 
 #grid-upgrades div {
   text-align: center;
-  background-color: rgba(40, 128, 229, 0.861); 
+  background-color: rgba(40, 128, 229, 0.861);
   width: 100%;
 }
 
@@ -206,22 +201,7 @@ height: 130px;
   margin-left: 10px;
 }
 
-.form-group {
-  font-weight: bold;
-  font-size: 1em;
-  margin-bottom: 10px;
-}
-
-/* Account Steps*/ 
-/* .account-actions {
-  border: 3px solid black;
-  border-radius: 10px;
-  background-color: rgba(40, 128, 229, 0.861);
-  padding: 10px;
-  width: 50%;
-  margin-left: 10px;
-} */
-
+/* Account Steps */
 .account-stuff {
   display: grid;
   grid-template-columns: 1fr;
@@ -230,7 +210,6 @@ height: 130px;
   padding: 20px;
   font-size: 1em;
   margin-left: 10px;
-
   border: 2px solid black;
   width: 40%;
 }
@@ -243,8 +222,6 @@ height: 130px;
   color: var(--main-color);
   border: none;
   border-radius: 5px;
-  padding: 10px;
-  margin-bottom: 15px;
 }
 
 .account-actions .btn:hover {
@@ -288,7 +265,7 @@ height: 130px;
   width: 15%;
 }
 
-/* classification form */
+/* Classification form */
 #classificationForm {
   border: 3px solid black;
   border-radius: 10px;
@@ -300,7 +277,7 @@ height: 130px;
   margin-left: 10px;
 }
 
-/* add inventory form */
+/* Add inventory form */
 #addInventoryForm {
   border: 3px solid black;
   border-radius: 10px;
@@ -312,7 +289,8 @@ height: 130px;
   margin-left: 10px;
 }
 
-#addInventoryForm input, select {
+#addInventoryForm input,
+select {
   margin-bottom: 10px;
 }
 
@@ -327,7 +305,8 @@ height: 130px;
   margin-left: 10px;
 }
 
-#edit-Inventory_form input, select {
+#edit-Inventory_form input,
+select {
   margin-bottom: 10px;
 }
 
@@ -342,7 +321,8 @@ height: 130px;
   margin-left: 10px;
 }
 
-#deleteForm input, select {
+#deleteForm input,
+select {
   margin-bottom: 10px;
 }
 
@@ -380,24 +360,30 @@ height: 130px;
 
 #account-stuff {
   padding: 20px;
-  font-size: 1em;
-  margin-left: 10px;
-  border: 2px solid black;
-  width: 40%;
 }
 
-#greetings {
-  font-size: 1.5em;
+/* Messages */
+.sucess-message {
   font-weight: bold;
-  margin-left: 10px;
-  margin-top: -40px;
+  color: var(--quaternary-color);
+  text-align: center;
 }
 
-footer {
+.error-message {
+  font-weight: bold;
   color: red;
-  margin-left: 10px
+  text-align: center;
 }
 
+/* Footer */
+footer {
+  margin-top: 30px;
+  text-align: center;
+  background-color: var(--tertiary-color);
+  color: var(--main-color);
+  padding: 10px;
+  font-weight: bold;
+}
 
 
 
