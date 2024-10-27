@@ -373,6 +373,9 @@ invCont.deleteInventoryData = async function (req, res, next) {
 };
 
 
+
+
+
 module.exports = invCont;
 
 

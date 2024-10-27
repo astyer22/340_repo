@@ -130,4 +130,71 @@ validate.checkLoginData = async (req, res, next) => {
   next()
 }
 
+// Validation middleware to check account update data
+validate.checkAccountUpdate = async (req, res, next) => {
+  const { account_id, account_email } = req.body;
+
+  // Apply validation rules
+  await body('account_firstname')
+    .notEmpty()
+    .withMessage('First name is required.')
+    .run(req);
+
+  await body('account_lastname')
+    .notEmpty()
+    .withMessage('Last name is required.')
+    .run(req);
+
+  await body('account_email')
+    .isEmail()
+    .withMessage('Valid email is required.')
+    .custom(async (value) => {
+      const existingAccount = await accountModel.findByEmail(value);
+
+      // Check if the email exists for another account
+      if (existingAccount && existingAccount.account_id !== parseInt(account_id)) {
+        throw new Error('Email already exists.');
+      }
+    })
+    .run(req);
+
+  // Handle validation result
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    req.flash('errors', errors.array());
+    return res.redirect(`/account/account-update/${account_id}`); // Redirect back with errors
+  }
+
+  next(); // Continue to the controller if no errors
+};
+
+// Validation middleware to check password change data
+validate.checkPasswordChange = async (req, res, next) => {
+  const { new_password } = req.body;
+
+  // Apply validation rules for password
+  await body('new_password')
+    .isLength({ min: 8 })
+    .withMessage('Password must be at least 8 characters long.')
+    .matches(/[A-Z]/)
+    .withMessage('Password must contain at least one uppercase letter.')
+    .matches(/[a-z]/)
+    .withMessage('Password must contain at least one lowercase letter.')
+    .matches(/[0-9]/)
+    .withMessage('Password must contain at least one number.')
+    .matches(/[\W_]/)
+    .withMessage('Password must contain at least one special character.')
+    .run(req);
+
+  // Handle validation result
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    req.flash('errors', errors.array());
+    const { account_id } = req.body;
+    return res.redirect(`/account/account-update/${account_id}`); // Redirect back with errors
+  }
+
+  next(); // Continue to the controller if no errors
+};
+
   module.exports = validate

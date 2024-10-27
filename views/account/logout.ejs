@@ -1,0 +1,26 @@
+<!-- Content Heading -->
+<% if (title) { %>
+    <h1><%= title %></h1>
+<% } else { %>
+    <%- res.redirect('/') %>
+<% } %>
+
+<!-- Flash messages -->
+<%- messages() %> 
+
+<% if (errors) { %>
+  <ul class="notice">
+ <% errors.array().forEach(error => { %>
+   <li><%= error.msg %></li>
+<%  }) %>
+ </ul>
+<% } %>
+
+<!--Message-->
+<p>Thank you for visiting CSE Motors. You have been successfully logged out.</p>
+
+<!--Return to Home Page-->
+<p><a href="/">Return to Home Page</a></p>
+
+<!--Login-->
+<p><a href="/account/login">Login</a></p>
