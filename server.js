@@ -21,7 +21,7 @@ const app = express();
 const static = require("./routes/static");
 const baseController = require("./controllers/baseController");
 const inventoryRoute = require("./routes/inventoryRoute");
-const customerReviewRoutes = require('./routes/reviewsRoutes');
+const reviewRoutes = require('./routes/reviewsRoutes');
 const utilities = require("./utilities/index");
 const accountRoute = require("./routes/accountRoute"); 
 const bodyParser = require("body-parser")
@@ -94,7 +94,7 @@ app.use("/inv", inventoryRoute);
 // Account Route
 app.use("/account", accountRoute);
 // Customer Reviews Route
-app.use('/customer', customerReviewRoutes); 
+app.use('/customer', reviewRoutes); 
 
 
 

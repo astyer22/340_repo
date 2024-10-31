@@ -20,31 +20,14 @@ router.get(
 router.get(
     '/register', utilities.handleErrors(accountController.buildRegister) 
   );
-  // / Logout route
-  router.get("/logout", (req, res) => {
+  router.get('/logout', (req, res) => {
     req.session.destroy(err => {
       if (err) {
-        console.error(err); // Log any error that occurs
-        return res.status(500).send("Could not log out. Please try again later.");
+        return res.redirect('/account/login'); // Redirect to login if there's an error
       }
-  
-      // Clear the JWT cookie
-      res.clearCookie("jwt");
-  
-      // Set a flash message using connect-flash
-      req.flash('success', 'You have been logged out successfully.');
-  
-      // Redirect to the logout review-confirmation page
-      res.redirect("/logout-review-confirmation");
+      res.clearCookie('connect.sid'); // Clear the session cookie
+      res.redirect('/account/login'); // Redirect to the login page
     });
-  });
-  
-  // Route for logout review-confirmation
-  router.get('/logout-review-confirmation', (req, res) => {
-    const title = 'Logout review-confirmation';
-    const messages = req.flash('success'); // Retrieve flash messages
-    const errors = []; // You can adjust this if you have validation errors
-    res.render('logout', { title, messages, errors }); // Render your logout page
   });
 
 // Route: GET /account/account-update/:id
@@ -65,9 +48,6 @@ router.post(
   regValidate.checkLoginData, 
   utilities.handleErrors(accountController.accountLogin) 
 );
-
-
-
 
 // Route for updating account information
 router.post('/account-update', accountController.handleAccountUpdate);
