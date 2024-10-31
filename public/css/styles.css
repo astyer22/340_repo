@@ -111,13 +111,13 @@ h2 {
   margin-bottom: -5px;
 }
 
-#d-reviews {
+#dreviews {
   font-size: 1em;
   margin-top: 80px;
   padding: 10px;
 }
 
-#d-reviews li {
+#dreviews li {
   margin-bottom: 10px;
 }
 
@@ -431,11 +431,11 @@ footer {
     grid-row: 1;
   }
 
-  #d-reviews {
+  #dreviews {
     grid-column: 2;
   }
 
-  #d-reviews li {
+  #dreviews li {
     font-size: 1.5em;
     margin-bottom: 10px;
     row-gap: 10px;

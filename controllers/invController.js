@@ -327,7 +327,7 @@ invCont.getInventoryJSON = async (req, res, next) => {
 }
 
 /* ***************************
- *  Build delete confirmation view
+ *  Build delete review-confirmation view
  * ************************** */
 invCont.buildDeleteView = async function (req, res, next) {
   const inv_id = parseInt(req.params.inv_id)
@@ -364,7 +364,7 @@ invCont.deleteInventoryData = async function (req, res, next) {
   } else {
     req.flash("notice", "Sorry, the delete failed.");
     res.status(501).render("inventory/delete-confirm", {
-      title: "Delete Confirmation",
+      title: "Delete review-confirmation",
       nav,
       errors: null,
       inv_id,

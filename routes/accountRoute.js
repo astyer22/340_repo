@@ -34,14 +34,14 @@ router.get(
       // Set a flash message using connect-flash
       req.flash('success', 'You have been logged out successfully.');
   
-      // Redirect to the logout confirmation page
-      res.redirect("/logout-confirmation");
+      // Redirect to the logout review-confirmation page
+      res.redirect("/logout-review-confirmation");
     });
   });
   
-  // Route for logout confirmation
-  router.get('/logout-confirmation', (req, res) => {
-    const title = 'Logout Confirmation';
+  // Route for logout review-confirmation
+  router.get('/logout-review-confirmation', (req, res) => {
+    const title = 'Logout review-confirmation';
     const messages = req.flash('success'); // Retrieve flash messages
     const errors = []; // You can adjust this if you have validation errors
     res.render('logout', { title, messages, errors }); // Render your logout page
