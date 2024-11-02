@@ -1,68 +1,67 @@
 <div id="main-content">
 
-
-<h1>
-    Welcome to CSE Motors!
-    <%- messages() %>
-</h1>
-<div id="main-hero">
-    <div id="fuzzy-dice">
+    <h1>
+      Welcome to CSE Motors!
+      <%- messages() %>
+    </h1>
+    
+    <div id="main-hero">
+      <div id="fuzzy-dice">
         <h2>DMC Delorean</h2> 
         3 cup holders <br>
         Superman doors <br>
         Fuzzy dice! <br>
         <br>
         <img src="/images/site/own_today.png" alt="own_today" width="125" height="35" loading="lazy">
-    </div>
-    
-    <picture>
-        <!-- Larger image for screens wider than 768px -->
+      </div>
+      
+      <picture>
         <source srcset="../images/vehicles/delorean.jpg" media="(min-width: 500px)">
-        <!-- Smaller image for mobile view as default -->
-        <img id= d-sm src="../images/vehicles/delorean-tn.jpg" alt="Delorean Mobile Photo">
-    </picture>
-
-</div>
-
-        <div id="d-info">
-            <div id="d-reviews">
-                <h2>Delorean Reviews</h2>
-                <ul>
-                    <li>"So fast it's like traveling in time." (4/5)</li>
-                    <li>"Coolest ride on the road." (4/5)</li>
-                    <li>"I'm feeling McFly!" (5/5)</li>
-                    <li>"THe most futuristic ride of the day" (4.5)</li>
-                    <li>"80's livin and I love it!" (5/5)</li>
-                </ul>
-            </div>
-            
-
-            <div id="d-upgrades">
-                <h2>Delorean Upgrades</h2>
-                <div id="grid-upgrades">
-                    <div id="flux" class="upgrade-photo">
-                        <img class="u-photo" src="images/upgrades/flux-cap.png" alt="flux-cap" loading="lazy">
-                        <p>Flux Capacitar</p>
-                    </div>
-                
-                    <div id="flame" class="upgrade-photo">
-                        <img class="u-photo" src="images/upgrades/flame.jpg" alt="flame" loading="lazy">
-                        <p>Flame Decals</p>
-                    </div>
-                
-                    <div id="bumper" class="upgrade-photo">
-                        <img class="u-photo" src="images/upgrades/bumper_sticker.jpg" alt="bump-stickers" loading="lazy">
-                        <p>Bumper Stickers</p>
-                    </div>
-                
-                    <div id="hub" class="upgrade-photo">
-                        <img class="u-photo" src="images/upgrades/hub-cap.jpg" alt="hub-caps" loading="lazy">
-                        <p>Hub Caps</p>
-                    </div>
-                </div>
-            </div>   
-        </div>
+        <img id="d-sm" src="../images/vehicles/delorean-tn.jpg" alt="Delorean Mobile Photo">
+      </picture>
     </div>
-</div>
-
-
+  
+    <div id="d-info">
+      <div id="d-reviews">
+        <h2>Delorean Reviews</h2>
+        <ul>
+          <li>"So fast it's like traveling in time." (4/5)</li>
+          <li>"Coolest ride on the road." (4/5)</li>
+          <li>"I'm feeling McFly!" (5/5)</li>
+          <li>"The most futuristic ride of the day" (4.5)</li>
+          <li>"80's livin and I love it!" (5/5)</li>
+        </ul>
+        
+        <!-- Button to direct users to the reviews page -->
+        <form class="reviewsbutton" action="../customer/reviews" method="GET">
+          <button type="submit">See More Reviews</button>
+        </form>
+      </div>
+  
+      <div id="d-upgrades">
+        <h2>Delorean Upgrades</h2>
+        <div id="grid-upgrades">
+          <div id="flux" class="upgrade-photo">
+            <img class="u-photo" src="images/upgrades/flux-cap.png" alt="flux-cap" loading="lazy">
+            <p>Flux Capacitar</p>
+          </div>
+          
+          <div id="flame" class="upgrade-photo">
+            <img class="u-photo" src="images/upgrades/flame.jpg" alt="flame" loading="lazy">
+            <p>Flame Decals</p>
+          </div>
+          
+          <div id="bumper" class="upgrade-photo">
+            <img class="u-photo" src="images/upgrades/bumper_sticker.jpg" alt="bump-stickers" loading="lazy">
+            <p>Bumper Stickers</p>
+          </div>
+          
+          <div id="hub" class="upgrade-photo">
+            <img class="u-photo" src="images/upgrades/hub-cap.jpg" alt="hub-caps" loading="lazy">
+            <p>Hub Caps</p>
+          </div>
+        </div>
+      </div>   
+    </div>
+  </div>
+  

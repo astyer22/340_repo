@@ -18,30 +18,32 @@
 <!-- Registration Form -->
 <form id="registrationForm" action="/account/register" method="POST" class="registration-form">
   
-  <!-- First Name -->
-    <label for="account_firstname">First Name:</label>
-    <input type="text" name="account_firstname" id="accountFirstname" required placeholder="Enter Your First Name" value="<%= locals.account_firstname %>">
-    <br>
-  <!-- Last Name -->
-    <label for="account_lastname">Last Name:</label>
-    <input type="text" name="account_lastname" id="account_lastname"  required placeholder="Enter Your Last Name" value="<%= locals.account_lastname %>">
-    <br>
-  <!-- Email Address -->
-    <label for="account_email">Email Address:</label>
-    <input type="email" name="account_email" id="account_email"  required placeholder="Enter Email" value="<%= locals.account_email %>">
-    <br>
-  <!-- Password -->
-    <label for="account_password">Password:</label>
-    <input type="password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$" id="account_password" name="account_password" required placeholder="Enter your password">
+<!-- First Name -->
+<label for="account_firstname">First Name:</label>
+<input type="text" name="account_firstname" id="account_firstname" required placeholder="Enter Your First Name" value="<%= locals.account_firstname %>">
+<br>
+<!-- Last Name -->
+<label for="account_lastname">Last Name:</label>
+<input type="text" name="account_lastname" id="account_lastname" required placeholder="Enter Your Last Name" value="<%= locals.account_lastname %>">
+<br>
+<!-- Email Address -->
+<label for="account_email">Email Address:</label>
+<input type="email" name="account_email" id="account_email" required placeholder="Enter Email" value="<%= locals.account_email %>">
+<br>
+<!-- Password -->
+<label for="account_password">Password:</label>
+<input type="password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$" id="account_password" name="account_password" required placeholder="Enter your password">
+
     <button type="button" id="togglePassword" class="btn btn-secondary">Show Password</button>
     <small id="passwordRequirements">
       Password must be at least 12 characters long and include at least:
-      <ul>
-        <li>1 capital letter</li>
-        <li>1 number</li>
-        <li>1 special character</li>
-      </ul>
     </small>
+    <ul>
+      <li>1 capital letter</li>
+      <li>1 number</li>
+      <li>1 special character</li>
+    </ul>
+  
     <div id="passwordError" style="color:red; display:none;">Your password does not meet the requirements.</div>
 
   <!-- Submit Button -->
